@@ -1,0 +1,23 @@
+{
+  "name": "rtx-test",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "rtx-test usage only",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./Server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "morgan": "^1.10.0",
+    "node-fetch": "^3.1.0",
+    "passport": "^0.5.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
