@@ -1,6 +1,5 @@
 {
   "name": "rtx-test",
-  "type": "module",
   "version": "1.0.0",
   "description": "rtx-test usage only",
   "main": "index.js",
@@ -12,12 +11,18 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
+    "dotenv": "^16.0.1",
     "express": "^4.17.2",
     "morgan": "^1.10.0",
     "node-fetch": "^3.1.0",
-    "passport": "^0.5.2"
+    "passport": "^0.5.2",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.21.3",
+    "sequelize-auto-migrations-v2": "^1.2.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "sequelize-cli": "^6.4.1"
   }
 }
