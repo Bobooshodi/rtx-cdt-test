@@ -1,17 +1,21 @@
 <template>
-  <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <PageLayout>
+    <el-card>
+      <PropertyTable />
+    </el-card>
+  </PageLayout>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import PageLayout from '@/components/layouts/PageLayout.vue';
+import PropertyTable from '@/components/tables/PropertyTable.vue';
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
+    PageLayout,
+    PropertyTable,
   },
 };
 </script>
