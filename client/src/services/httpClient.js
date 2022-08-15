@@ -21,7 +21,7 @@ export const putResource = async (path, data) => {
 };
 
 export const deleteResource = async (path) => {
-  const res = await axios.put(`${basePath}${path}`);
+  const res = await axios.delete(`${basePath}${path}`);
 
   return res.data;
 };

@@ -1,7 +1,11 @@
 <template>
-  <PageLayout>
+  <PageLayout title="Properties List" :prevPage="prevPage">
     <el-card>
-      <PropertyTable :properties="properties" />
+      <PropertyTable
+        :properties="properties"
+        :loading="isFetching"
+        :onDelete="handleDeletePropertyClick"
+      />
       <el-pagination
         v-model:currentPage="pagination.currentPage"
         v-model:page-size="pagination.rowsPerPage"
@@ -16,10 +20,14 @@
 </template>
 
 <script>
+import { markRaw } from 'vue';
+import { ElMessage, ElMessageBox } from 'element-plus';
+import { Delete } from '@element-plus/icons-vue';
+
 // @ is an alias to /src
 import PageLayout from '@/components/layouts/PageLayout.vue';
 import PropertyTable from '@/components/tables/PropertyTable.vue';
-import { getResource } from '@/services/httpClient';
+import { deleteResource, getResource } from '@/services/httpClient';
 
 export default {
   name: 'Home',
@@ -39,6 +47,11 @@ export default {
   },
   data() {
     return {
+      isFetching: false,
+      prevPage: {
+        title: ' ',
+        path: '/',
+      },
       properties: [],
       pagination: {
         page: 1,
@@ -50,12 +63,14 @@ export default {
   },
   methods: {
     async fetchProperties() {
+      this.loading = true;
       const res = await getResource('/properties', this.requestPaginationParam);
       this.properties = res.data.map((property) => ({
         ...property,
         ReviewSummary: { ...property.ReviewSummary, score: property.ReviewSummary.score / 20 },
       }));
       this.pagination = res.pagination;
+      this.loading = false;
     },
 
     async handlePageSizeChange(val) {
@@ -70,6 +85,38 @@ export default {
       this.pagination.page = val;
 
       await this.fetchProperties();
+    },
+
+    async handleDeletePropertyClick(property) {
+      ElMessageBox.confirm(
+        `${property.name} will be permanently deleted from the Server. Are you sure you want to continue?`,
+        'Warning',
+        {
+          type: 'warning',
+          icon: markRaw(Delete),
+        },
+      )
+        .then(async () => {
+          this.isFetching = true;
+          await deleteResource(`/properties/${property.uuid}`);
+          ElMessage({
+            type: 'success',
+            message: 'Property Successfully Deleted',
+          });
+        })
+        .catch((e) => {
+          if (e !== 'cancel') {
+            ElMessage({
+              type: 'info',
+              message: 'Unable to Perform Operation, please try again',
+            });
+          }
+        })
+        .finally(() => {
+          this.isFetching = false;
+        });
+
+      this.isFetching = false;
     },
   },
   async mounted() {

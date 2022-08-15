@@ -1,24 +1,36 @@
 <template>
   <div class="common-layout">
-    <el-breadcrumb class="breadcrumbs" separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-      <el-breadcrumb-item><a href="/">promotion management</a></el-breadcrumb-item>
-      <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
-    </el-breadcrumb>
+    <el-page-header
+      class="header"
+      :icon="getHeaderIcon()"
+      :title="prevPage.title"
+      :content="title"
+      @back="goBack"
+    />
     <slot></slot>
   </div>
 </template>
 
 <script>
 import { useRouter } from 'vue-router';
+import { ArrowLeft, House } from '@element-plus/icons-vue';
 
 export default {
   name: 'PageLayout',
-  components: {},
+  props: {
+    prevPage: { type: Object },
+    title: { type: String },
+  },
   methods: {
     goBack() {
-      console.log('Going Back');
+      if (!this.prevPage.title.trim()) {
+        return;
+      }
+      this.$router.push(this.prevPage.path);
+    },
+
+    getHeaderIcon() {
+      return this.prevPage.title.trim() ? ArrowLeft : House;
     },
   },
   setup() {
@@ -34,7 +46,7 @@ export default {
   flex-grow: 1;
 }
 
-.breadcrumbs {
+.header {
   margin-bottom: 1%;
 }
 </style>

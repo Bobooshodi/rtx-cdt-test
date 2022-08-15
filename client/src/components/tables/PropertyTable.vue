@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="properties" table-layout="auto">
+  <el-table v-loading="loading" :data="properties" table-layout="auto">
     <el-table-column align="left">
       <template #default="scope">
         <el-image class="image" :src="scope.row.image" fit="contain" />
@@ -49,7 +49,9 @@ export default {
     };
   },
   props: {
-    properties: [],
+    properties: { type: Array },
+    loading: { type: Boolean, default: false },
+    onDelete: { type: Function },
   },
   methods: {
     async handleEdit(property) {
@@ -58,6 +60,9 @@ export default {
 
     async handleDelete(property) {
       console.log(property);
+      if (this.onDelete) {
+        await this.onDelete(property);
+      }
     },
   },
 };
