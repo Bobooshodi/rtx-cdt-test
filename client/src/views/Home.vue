@@ -29,7 +29,12 @@ export default {
   },
   computed: {
     requestPaginationParam() {
-      return { page: this.pagination.currentPage, rowsPerPage: this.pagination.rowsPerPage };
+      return {
+        page: this.pagination.currentPage,
+        rowsPerPage: this.pagination.rowsPerPage,
+        'Location.country[exists]': true,
+        'ReviewSummary.score[exists]': true,
+      };
     },
   },
   data() {

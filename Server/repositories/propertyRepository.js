@@ -113,15 +113,18 @@ const makeQueryOptions = (options) => {
     for(const [key, value] of Object.entries(options.where)) {
       if (typeof value === 'object') {
         if (key.includes('.')) {
+          if (!Array.isArray(options.include)) {
+            options.include = [];
+          }
           const associationDetails = key.split('.');
           const associatedModel = associatedModels.find((model) => model.name === associationDetails[0])
 
           switch (true) {
             case value.hasOwnProperty('exists'):
-              options.include = { 
+              options.include.push({ 
                 model: associatedModel.model,
                 where: { [associationDetails[1]]: value.exists === true || value.exists === 'true' ? { [Op.not]: null } : { [Op.is]: null } }
-              }
+              })
 
               // Add other cases E.g. gt, lt, gte, tec.
             default:
