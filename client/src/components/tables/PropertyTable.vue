@@ -2,19 +2,19 @@
   <el-table :data="properties" table-layout="auto">
     <el-table-column align="left">
       <template #default="scope">
-        <el-image class="image" :src="scope.row.heroImage.url" fit="contain" />
+        <el-image class="image" :src="scope.row.image" fit="contain" />
       </template>
     </el-table-column>
     <el-table-column prop="name" label="Name"></el-table-column>
-    <el-table-column prop="location.country" label="Country" />
+    <el-table-column prop="Location.country" label="Country" />
     <el-table-column align="center" label="Rating">
       <template #default="scope">
         <el-rate
-          v-model="scope.row.reviews.summary.score"
+          v-model="scope.row.ReviewSummary.score"
           disabled
           show-score
           text-color="#ff9900"
-          score-template="{scope.row.reviews.summary.scoreDescription}"
+          score-template="{value}"
         />
       </template>
     </el-table-column>
@@ -45,146 +45,18 @@ export default {
   components: {},
   data() {
     return {
-      properties: [
-        {
-          heroImage: {
-            url: 'https://property-gallery.rakutentravelxchange.com/fqeA/QK0XAKe6.jpg',
-          },
-          name: 'Test 1',
-          location: {
-            address: 'No 185 St Georges Terrace',
-            city: 'Perth',
-            country: 'AU',
-            countryCode: 'AU',
-            postalCode: '6000',
-            stateProvince: null,
-            latLng: {
-              lat: -31.953843,
-              lng: 115.853637,
-            },
-          },
-          reviews: {
-            summary: {
-              score: '85',
-              scoreDescription: 'Very Good',
-              summarySentenceList: [],
-              text: 'Very good wellness hotel. Located near shopping areas with easy access to parking.',
-            },
-          },
-        },
-        {
-          heroImage: {
-            url: 'https://property-gallery.rakutentravelxchange.com/fqeA/QK0XAKe6.jpg',
-          },
-          name: 'Test 1',
-          location: {
-            address: 'No 185 St Georges Terrace',
-            city: 'Perth',
-            country: 'AU',
-            countryCode: 'AU',
-            postalCode: '6000',
-            stateProvince: null,
-            latLng: {
-              lat: -31.953843,
-              lng: 115.853637,
-            },
-          },
-          reviews: {
-            summary: {
-              score: '85',
-              scoreDescription: 'Very Good',
-              summarySentenceList: [],
-              text: 'Very good wellness hotel. Located near shopping areas with easy access to parking.',
-            },
-          },
-        },
-        {
-          heroImage: {
-            url: 'https://property-gallery.rakutentravelxchange.com/fqeA/QK0XAKe6.jpg',
-          },
-          name: 'Test 1',
-          location: {
-            address: 'No 185 St Georges Terrace',
-            city: 'Perth',
-            country: 'AU',
-            countryCode: 'AU',
-            postalCode: '6000',
-            stateProvince: null,
-            latLng: {
-              lat: -31.953843,
-              lng: 115.853637,
-            },
-          },
-          reviews: {
-            summary: {
-              score: '85',
-              scoreDescription: 'Very Good',
-              summarySentenceList: [],
-              text: 'Very good wellness hotel. Located near shopping areas with easy access to parking.',
-            },
-          },
-        },
-        {
-          heroImage: {
-            url: 'https://property-gallery.rakutentravelxchange.com/fqeA/QK0XAKe6.jpg',
-          },
-          name: 'Test 1',
-          location: {
-            address: 'No 185 St Georges Terrace',
-            city: 'Perth',
-            country: 'AU',
-            countryCode: 'AU',
-            postalCode: '6000',
-            stateProvince: null,
-            latLng: {
-              lat: -31.953843,
-              lng: 115.853637,
-            },
-          },
-          reviews: {
-            summary: {
-              score: '85',
-              scoreDescription: 'Very Good',
-              summarySentenceList: [],
-              text: 'Very good wellness hotel. Located near shopping areas with easy access to parking.',
-            },
-          },
-        },
-        {
-          heroImage: {
-            url: 'https://property-gallery.rakutentravelxchange.com/fqeA/QK0XAKe6.jpg',
-          },
-          name: 'Test 1',
-          location: {
-            address: 'No 185 St Georges Terrace',
-            city: 'Perth',
-            country: 'AU',
-            countryCode: 'AU',
-            postalCode: '6000',
-            stateProvince: null,
-            latLng: {
-              lat: -31.953843,
-              lng: 115.853637,
-            },
-          },
-          reviews: {
-            summary: {
-              score: '85',
-              scoreDescription: 'Very Good',
-              summarySentenceList: [],
-              text: 'Very good wellness hotel. Located near shopping areas with easy access to parking.',
-            },
-          },
-        },
-      ],
+      pagination: this.paginationValue,
     };
   },
+  props: {
+    properties: [],
+  },
   methods: {
-    handleEdit(property) {
+    async handleEdit(property) {
       console.log(property);
     },
 
-    handleDelete(property) {
+    async handleDelete(property) {
       console.log(property);
     },
   },

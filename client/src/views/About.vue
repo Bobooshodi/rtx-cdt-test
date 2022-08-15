@@ -15,7 +15,7 @@
 // import { ref, onMounted } from 'vue';
 import PageLayout from '@/components/layouts/PageLayout.vue';
 
-import axios from 'axios';
+import { getResource } from '@/services/httpClient';
 
 export default {
   components: {
@@ -26,11 +26,9 @@ export default {
       hotels: [],
     };
   },
-  mounted() {
-    axios.get('/api/fromSource')
-      .then((res) => {
-        this.hotels = res?.data?.outlets?.availability?.results;
-      });
+  async mounted() {
+    const res = await getResource('/external/from-source');
+    this.hotels = res?.data?.outlets?.availability?.results;
   },
 };
 

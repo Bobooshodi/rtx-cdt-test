@@ -21,7 +21,7 @@ exports.getPropertiesController = async (req, res, next) => {
       }
 
       const pagination = {
-        currentPage: filters.page,
+        currentPage: filters.page || 1,
         rowsPerPage: filters.rowsPerPage
       }
 
