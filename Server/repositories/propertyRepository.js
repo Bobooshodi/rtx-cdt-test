@@ -1,8 +1,20 @@
+const { omit } = require('lodash');
+const { Op } = require('sequelize');
 const { Location, Property, ReviewSummary } = require('../db/models');
+
+const associatedModels = [
+  {
+    name: 'Location',
+    model: Location
+  },
+  {
+    name: 'ReviewSummary',
+    model: ReviewSummary
+  }
+]
 
 exports.create = async (property) => {
   try {
-    console.log(property);
     const newProperty = await Property.create(property);
 
     if (property.Location) {
@@ -23,7 +35,6 @@ exports.create = async (property) => {
 
 exports.bulkCreate = async (properties) => {
   try {
-    console.log(properties);
     const newProperties = await Property.bulkCreate(properties, {
       include: [
         {
@@ -49,6 +60,35 @@ exports.bulkCreate = async (properties) => {
 
 exports.getAll = async (options = {}) => {
   try {
+    for(const [key, value] of Object.entries(options.where)) {
+      if (typeof value === 'object') {
+        if (key.includes('.')) {
+          const associationDetails = key.split('.');
+          const associatedModel = associatedModels.find((model) => model.name === associationDetails[0])
+
+          switch (true) {
+            case value.hasOwnProperty('exists'):
+              options.include = { 
+                model: associatedModel.model,
+                where: { [associationDetails[1]]: value.exists === true || value.exists === 'true' ? { [Op.not]: null } : { [Op.is]: null } }
+              }
+
+              // Add other cases E.g. gt, lt, gte, tec.
+            default:
+              options.include = options.include;
+          }
+        } else {
+          if (value.hasOwnProperty('exists')) {
+            options.where = { ...options.where, [key]: value.exists ? { [Op.not]: null } : { [Op.is]: null }
+          }
+          // Add other Cases E.g. gt, lt, gte, tec.
+        }
+        }
+
+        options.where = omit(options.where, key);
+      }
+    }
+
     return Property.findAll(options);
   } catch (e) {
     console.error(e);
