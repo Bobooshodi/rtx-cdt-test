@@ -4,7 +4,9 @@
   "description": "rtx-test usage only",
   "main": "index.js",
   "scripts": {
+    "create-db": "sequelize db:create",
     "dev": "nodemon ./Server/index.js",
+    "migrate-db": "sequelize db:migrate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
