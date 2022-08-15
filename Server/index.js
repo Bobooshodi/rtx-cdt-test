@@ -1,10 +1,10 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import config from './config.js';
-import morgan from 'morgan';
+const express = require('express');
+const bodyParser = require('body-parser');
+const config = require('./config.js');
+const morgan = require('morgan');
 
 // routes 
-import routes from './routes/index.js';
+const routes = require('./routes/index.js');
 
 const port = config.service.port || 3000;
 
@@ -36,4 +36,4 @@ app.listen(port, async function () {
   // }
 });
 
-export default app;
+module.exports = app;

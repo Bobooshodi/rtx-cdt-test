@@ -1,9 +1,9 @@
 'use strict';
 
-import fetch from 'node-fetch';
-import config from '../config.js';
+const fetch = require('node-fetch');
+const config = require('../config.js');
 
-export const getListFromAPI = async () => {
+exports.getListFromAPI = async () => {
   try {
     const path = '/search/sgsg';
 

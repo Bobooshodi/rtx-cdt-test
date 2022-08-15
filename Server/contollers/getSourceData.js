@@ -1,6 +1,6 @@
-import { getListFromAPI } from '../services/externalAPIHandler.js';
+const { getListFromAPI } = require('../services/externalAPIHandler.js');
 
-export const getSourceDataFromAPI = async (req, res, next) => {
+exports.getSourceDataFromAPI = async (req, res, next) => {
     try {
       // 6. Call handler to response with data
       const data = await getListFromAPI();
