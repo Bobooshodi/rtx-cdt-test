@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
 import { ArrowLeft, House } from '@element-plus/icons-vue';
 
 export default {
@@ -34,9 +33,6 @@ export default {
     },
   },
   setup() {
-    const router = useRouter();
-
-    console.log(router.options.history.state);
     return {};
   },
 };

@@ -5,6 +5,7 @@
         :properties="properties"
         :loading="isFetching"
         :onDelete="handleDeletePropertyClick"
+        :onEdit="handleEditPropertyClick"
       />
       <el-pagination
         v-model:currentPage="pagination.currentPage"
@@ -74,14 +75,12 @@ export default {
     },
 
     async handlePageSizeChange(val) {
-      console.log('Page Size: ', val);
       this.pagination.rowsPerPage = val;
 
       await this.fetchProperties();
     },
 
     async handleCurrentPageChange(val) {
-      console.log('Current Page: ', val);
       this.pagination.page = val;
 
       await this.fetchProperties();
@@ -117,6 +116,10 @@ export default {
         });
 
       this.isFetching = false;
+    },
+
+    async handleEditPropertyClick(property) {
+      this.$router.push({ name: 'PropertyDetails', params: { id: property.uuid } });
     },
   },
   async mounted() {

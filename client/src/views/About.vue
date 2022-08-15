@@ -1,5 +1,5 @@
 <template>
-    <PageLayout>
+    <PageLayout title="Facts" :prevPage="{title: 'Home', path: '/' }">
     <el-card>
       Hello World
     </el-card>

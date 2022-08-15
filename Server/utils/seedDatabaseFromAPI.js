@@ -5,8 +5,6 @@ exports.seedDatabaseFromAPI = async () => {
   try {
     const existingPropertiesCount = await countProperties();
 
-    console.log('Properties Count: ', existingPropertiesCount);
-
     if (existingPropertiesCount > 0) {
       return true;
     }

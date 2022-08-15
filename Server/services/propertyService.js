@@ -57,7 +57,7 @@ exports.getProperties = async (filters = {}, options = {}) => {
 
 exports.updateProperty = async (property) => {
   try {
-    return update(property, { where: { uuid: property.uuid } });
+    return update(property, { where: { uuid: property.uuid }, returning: true });
   } catch (e) {
     console.error(e);
     throw e;

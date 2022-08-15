@@ -52,14 +52,16 @@ export default {
     properties: { type: Array },
     loading: { type: Boolean, default: false },
     onDelete: { type: Function },
+    onEdit: { type: Function },
   },
   methods: {
     async handleEdit(property) {
-      console.log(property);
+      if (this.onEdit) {
+        this.onEdit(property);
+      }
     },
 
     async handleDelete(property) {
-      console.log(property);
       if (this.onDelete) {
         await this.onDelete(property);
       }

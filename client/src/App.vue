@@ -8,7 +8,6 @@
           class="el-menu-demo"
           mode="horizontal"
           :ellipsis="false"
-          @select="handleSelect"
         >
           <el-menu-item index="">AWESOME LOGO</el-menu-item>
           <div class="flex-grow" />
@@ -31,12 +30,7 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    handleSelect(key) {
-      console.log(key);
-      console.log(this.$router);
-    },
-  },
+  methods: {},
   setup() {
     const activeIndex = ref('1');
 

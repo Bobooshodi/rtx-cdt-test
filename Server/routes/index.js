@@ -7,6 +7,8 @@ const externalAPIRoutes = require('./externalAPI.js');
 const { createPropertyController } = require('../contollers/propertyControllers/createProperty.js');
 const { getPropertiesController } = require('../contollers/propertyControllers/getProperties.js');
 const { createBulkPropertiesController } = require('../contollers/propertyControllers/createBulkProperties.js');
+const { getPropertyController } = require('../contollers/propertyControllers/getProperty.js');
+const { updatePropertyController } = require('../contollers/propertyControllers/updateProperty.js');
 
 const router = Router({
   caseSensitive: true
@@ -19,5 +21,9 @@ router.post('/properties/bulk-create', createBulkPropertiesController);
 router.route('/properties')
       .post(createPropertyController)
       .get(getPropertiesController);
+      
+router.route('/properties/:id')
+      .get(getPropertyController)
+      .put(updatePropertyController);
 
 module.exports = router;
