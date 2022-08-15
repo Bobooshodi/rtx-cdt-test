@@ -31,8 +31,9 @@ app.get('*', (req, res) =>
 const server = app.listen(port);
 
 console.log('Seeding Database Please Wait.......');
-const isSuccessful = seedDatabaseFromAPI().then((isSuccessful) => {
+seedDatabaseFromAPI().then((isSuccessful) => {
   if (isSuccessful) {
+    console.log('Database Seeded');
     console.log('Application running on port: ', port);
   } else {
     throw new Error('Unable to seed DB Data, Shutting Down...');

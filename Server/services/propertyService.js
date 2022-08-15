@@ -6,7 +6,8 @@ const {
   deleteProperty,
   get,
   getAll,
-  update
+  update,
+  count
 } = require('../repositories/propertyRepository');
 
 exports.createProperty = async (property) => {
@@ -65,6 +66,15 @@ exports.updateProperty = async (property) => {
 exports.deleteProperty = async (uuid) => {
   try {
     return deleteProperty({ where: { uuid } });
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+exports.countProperties = async (filters = {}) => {
+  try {
+    return count(filters);
   } catch (e) {
     console.error(e);
     throw e;

@@ -1,8 +1,16 @@
 const { getListFromAPI } = require('../services/externalAPIHandler');
-const { createMultipleProperties } = require('../services/propertyService');
+const { createMultipleProperties, countProperties } = require('../services/propertyService');
 
 exports.seedDatabaseFromAPI = async () => {
   try {
+    const existingPropertiesCount = await countProperties();
+
+    console.log('Properties Count: ', existingPropertiesCount);
+
+    if (existingPropertiesCount > 0) {
+      return true;
+    }
+
     const res = await getListFromAPI();
     const properties = [];
 

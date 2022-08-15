@@ -87,4 +87,8 @@ exports.deleteProperty = async (options) => {
   }
 };
 
-
+exports.count = async (filters = {}) => {
+  return Property.count({
+    where: filters
+  });
+}
