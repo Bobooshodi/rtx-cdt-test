@@ -41,12 +41,13 @@ exports.getProperty = async (uuid) => {
   }
 };
 
-exports.getProperties = async (filters = {}) => {
+exports.getProperties = async (filters = {}, options = {}) => {
   try {
     return await getAll({
       where: filters,
       attributes: { exclude: ['id'] },
-      include: { all: true }
+      include: { all: true },
+      ...options
     });
   } catch (e) {
     console.error(e);
