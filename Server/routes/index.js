@@ -13,7 +13,7 @@ const router = Router({
 })
 
 // 5. Use imported routes in router
-router.use('/api', externalAPIRoutes);
+router.use('/external', externalAPIRoutes);
 router.post('/properties/bulk-create', createBulkPropertiesController);
 
 router.route('/properties')

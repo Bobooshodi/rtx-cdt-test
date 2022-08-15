@@ -3,7 +3,9 @@ const bodyParser = require('body-parser');
 const config = require('./config.js');
 const morgan = require('morgan');
 
-// routes 
+const { seedDatabaseFromAPI } = require('./utils/seedDatabaseFromAPI');
+
+// routes
 const routes = require('./routes/index.js');
 
 const port = config.service.port || 3000;
@@ -19,21 +21,25 @@ app.use(morgan('combined'));
 // 2. Require our routes into the application.
 app.use(routes);
 
-app.get('*', (req, res) => res.status(200).send({
-  message: 'Welcome to the beginning of nothingness.',
-}));
+app.get('*', (req, res) =>
+  res.status(200).send({
+    message: 'Welcome to the beginning of nothingness.',
+  })
+);
 
 // 3. Server listen to port
-app.listen(port, async function () {
-  console.log("Application running on port: ", port);
-  // console.log('Seeding Database Please Wait.......');
-  // const isSuccessful = await seedDatabaseData(); 
+const server = app.listen(port);
 
-  // if (isSuccessful) {
-  //   console.log("Application running on port: ", app.get("port"));
-  // } else {
-  //   console.error('Unable to seed DB Data, Shutting Down...');
-  // }
+console.log('Seeding Database Please Wait.......');
+const isSuccessful = seedDatabaseFromAPI().then((isSuccessful) => {
+  if (isSuccessful) {
+    console.log('Application running on port: ', port);
+  } else {
+    throw new Error('Unable to seed DB Data, Shutting Down...');
+  }
+}).catch((e) => {
+  console.error(e);
+  server.close();
 });
 
-module.exports = app;
+module.exports = server;

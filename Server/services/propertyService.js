@@ -9,14 +9,8 @@ const {
   update
 } = require('../repositories/propertyRepository');
 
-exports.createProperty = async (data) => {
+exports.createProperty = async (property) => {
   try {
-    const property = {
-      ...data,
-      image: data.heroImage.url,
-      reviewSummary: data.reviews.summary,
-    };
-
     return create(omit(property, ['id']));
   } catch (e) {
     console.error(e);
@@ -24,13 +18,8 @@ exports.createProperty = async (data) => {
   }
 };
 
-exports.createMultipleProperties = async (data) => {
+exports.createMultipleProperties = async (properties) => {
   try {
-    const properties = data.map((property) => ({
-      ...property,
-      image: property.heroImage.url,
-      ReviewSummary: property.reviews.summary,
-    }));
     return bulkCreate(properties);
   } catch (e) {
     console.error(e);
@@ -64,14 +53,8 @@ exports.getProperties = async (filters = {}) => {
   }
 };
 
-exports.updateProperty = async (data) => {
+exports.updateProperty = async (property) => {
   try {
-    const property = {
-      ...data,
-      image: data.heroImage.url,
-      ReviewSummary: data.reviews.summary,
-    };
-
     return update(property, { where: { uuid: property.uuid } });
   } catch (e) {
     console.error(e);

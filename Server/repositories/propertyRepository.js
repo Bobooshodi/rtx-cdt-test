@@ -5,11 +5,11 @@ exports.create = async (property) => {
     console.log(property);
     const newProperty = await Property.create(property);
 
-    if (property.location) {
+    if (property.Location) {
       await newProperty.createLocation(property.location);
     }
 
-    if (property.reviewSummary) {
+    if (property.ReviewSummary) {
       await newProperty.createReviewSummary(property.reviewSummary);
     }
 

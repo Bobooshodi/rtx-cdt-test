@@ -3,6 +3,6 @@ const { getSourceDataFromAPI } = require('../contollers/getSourceData.js');
 
 const router = Router();
 
-router.get('/fromSource', getSourceDataFromAPI);
+router.get('/from-source', getSourceDataFromAPI);
 
 module.exports = router;
