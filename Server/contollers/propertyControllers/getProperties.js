@@ -27,7 +27,7 @@ exports.getPropertiesController = async (req, res, next) => {
 
       filters  = omit(filters, ['rowsPerPage', 'page']);
 
-      const totalItems = 92 // await countProperties(filters);
+      const totalItems = await countProperties(filters);
       pagination.totalItems = totalItems;
       pagination.lastPage = Math.ceil(totalItems / pagination.rowsPerPage);
 

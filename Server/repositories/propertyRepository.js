@@ -60,34 +60,7 @@ exports.bulkCreate = async (properties) => {
 
 exports.getAll = async (options = {}) => {
   try {
-    for(const [key, value] of Object.entries(options.where)) {
-      if (typeof value === 'object') {
-        if (key.includes('.')) {
-          const associationDetails = key.split('.');
-          const associatedModel = associatedModels.find((model) => model.name === associationDetails[0])
-
-          switch (true) {
-            case value.hasOwnProperty('exists'):
-              options.include = { 
-                model: associatedModel.model,
-                where: { [associationDetails[1]]: value.exists === true || value.exists === 'true' ? { [Op.not]: null } : { [Op.is]: null } }
-              }
-
-              // Add other cases E.g. gt, lt, gte, tec.
-            default:
-              options.include = options.include;
-          }
-        } else {
-          if (value.hasOwnProperty('exists')) {
-            options.where = { ...options.where, [key]: value.exists ? { [Op.not]: null } : { [Op.is]: null }
-          }
-          // Add other Cases E.g. gt, lt, gte, tec.
-        }
-        }
-
-        options.where = omit(options.where, key);
-      }
-    }
+    options = makeQueryOptions(options);
 
     return Property.findAll(options);
   } catch (e) {
@@ -128,7 +101,48 @@ exports.deleteProperty = async (options) => {
 };
 
 exports.count = async (filters = {}) => {
-  return Property.count({
+  let options = makeQueryOptions({
     where: filters
   });
+
+  return Property.count(options);
+}
+
+const makeQueryOptions = (options) => {
+  try {
+    for(const [key, value] of Object.entries(options.where)) {
+      if (typeof value === 'object') {
+        if (key.includes('.')) {
+          const associationDetails = key.split('.');
+          const associatedModel = associatedModels.find((model) => model.name === associationDetails[0])
+
+          switch (true) {
+            case value.hasOwnProperty('exists'):
+              options.include = { 
+                model: associatedModel.model,
+                where: { [associationDetails[1]]: value.exists === true || value.exists === 'true' ? { [Op.not]: null } : { [Op.is]: null } }
+              }
+
+              // Add other cases E.g. gt, lt, gte, tec.
+            default:
+              options.include = options.include;
+          }
+        } else {
+          if (value.hasOwnProperty('exists')) {
+            options.where = { ...options.where, [key]: value.exists ? { [Op.not]: null } : { [Op.is]: null }
+          }
+          // Add other Cases E.g. gt, lt, gte, tec.
+        }
+        }
+
+        options.where = omit(options.where, key);
+      }
+    }
+
+    return options;
+  } catch (e) {
+    console.error(e);
+
+    throw e;
+  }
 }
