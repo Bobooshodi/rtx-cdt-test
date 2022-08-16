@@ -2,10 +2,13 @@ const { updateProperty, getProperty } = require('../../services/propertyService'
 
 exports.updatePropertyController = async (req, res, next) => {
   try {
-    const data = req.body;
+    const { body: data, params } = req;
+
+    data.uuid = data.uuid || params.id;
 
     await updateProperty(data);
-    res.send(getProperty(data.uuid));
+    const updatedProperty = await getProperty(data.uuid);
+    res.send(updatedProperty);
   } catch (err) {
     next(err);
   }

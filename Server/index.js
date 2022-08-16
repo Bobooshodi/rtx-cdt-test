@@ -30,17 +30,23 @@ app.get('*', (req, res) =>
 // 3. Server listen to port
 const server = app.listen(port);
 
-console.log('Seeding Database Please Wait.......');
-seedDatabaseFromAPI().then((isSuccessful) => {
-  if (isSuccessful) {
-    console.log('Database Seeded');
-    console.log('Application running on port: ', port);
-  } else {
-    throw new Error('Unable to seed DB Data, Shutting Down...');
-  }
-}).catch((e) => {
-  console.error(e);
-  server.close();
-});
+if (process.env.NODE_ENV === 'production') {
+  console.log('Seeding Database Please Wait.......');
+  seedDatabaseFromAPI()
+    .then((isSuccessful) => {
+      if (isSuccessful) {
+        console.log('Database Seeded');
+        console.log('Application running on port: ', port);
+      } else {
+        throw new Error('Unable to seed DB Data, Shutting Down...');
+      }
+    })
+    .catch((e) => {
+      console.error(e);
+      server.close();
+    });
+} else {
+  console.log('Application running on port: ', port);
+}
 
 module.exports = server;

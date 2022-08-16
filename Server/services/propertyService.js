@@ -1,5 +1,3 @@
-const { omit, map } = require('lodash');
-
 const {
   bulkCreate,
   create,
@@ -12,7 +10,8 @@ const {
 
 exports.createProperty = async (property) => {
   try {
-    return create(omit(property, ['id']));
+    const newProperty = await create(property);
+    return this.getProperty(newProperty.dataValues.uuid);
   } catch (e) {
     console.error(e);
     throw e;
@@ -64,7 +63,7 @@ exports.updateProperty = async (property) => {
   }
 };
 
-exports.deleteProperty = async (uuid) => {
+exports.deleteWithUUID = async (uuid) => {
   try {
     return deleteProperty({ where: { uuid } });
   } catch (e) {

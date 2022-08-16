@@ -4,10 +4,14 @@
   "description": "rtx-test usage only",
   "main": "index.js",
   "scripts": {
+    "coverage": "nyc npm run test",
     "create-db": "sequelize db:create",
+    "db:create:test": "NODE_ENV=test npx sequelize-cli db:create",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
     "dev": "nodemon ./Server/index.js",
     "migrate-db": "sequelize db:migrate",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "NODE_ENV=test npm run db:reset",
+    "test": "NODE_ENV=test nyc mocha --timeout 10000 ./tests/*"
   },
   "author": "",
   "license": "ISC",
@@ -25,7 +29,11 @@
     "sequelize-auto-migrations-v2": "^1.2.1"
   },
   "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.0.0",
     "nodemon": "^2.0.15",
+    "nyc": "^15.1.0",
     "sequelize-cli": "^6.4.1"
   }
 }

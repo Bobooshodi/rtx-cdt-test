@@ -92,7 +92,7 @@ exports.update = async (data, options) => {
 
 exports.deleteProperty = async (options) => {
   try {
-    return Property.update(options);
+    return Property.destroy(options);
   } catch (e) {
     console.error(e);
 
