@@ -8,7 +8,7 @@
     "create-db": "sequelize db:create",
     "db:create:test": "NODE_ENV=test npx sequelize-cli db:create",
     "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
-    "dev": "nodemon ./Server/index.js",
+    "dev": "NODE_ENV=development nodemon ./Server/index.js",
     "migrate-db": "sequelize db:migrate",
     "pretest": "NODE_ENV=test npm run db:reset",
     "test": "NODE_ENV=test nyc mocha --timeout 10000 ./tests/*"

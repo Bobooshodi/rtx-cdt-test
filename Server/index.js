@@ -30,7 +30,7 @@ app.get('*', (req, res) =>
 // 3. Server listen to port
 const server = app.listen(port);
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV !== 'test') {
   console.log('Seeding Database Please Wait.......');
   seedDatabaseFromAPI()
     .then((isSuccessful) => {
