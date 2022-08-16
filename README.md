@@ -1,5 +1,24 @@
 # software-engineer-test
 
+How to run With Docker (recommended)
+1. Have Docker and Docker-compose installed on your machine 
+2. Clone this repo
+3. Navigate to the directory containing the the cloned Repo.
+4. modify the `Server/.env` and `docker/db/.env` files accordingly
+5. Run `docker-compose up -d --build` in the terminal from the root directory of the cloned Repo.
+
+How to run Without Docker
+1. see the Prerequisite section of this document 
+2. Clone this repo
+3. Navigate to the directory containing the the cloned Repo.
+4. Navigate to the `/Server` directory
+5. modify the `.env` file accordingly
+6. Run `npm test` in the terminal from the `Server` directory to view the tests.
+7. run `npm run dev` in the terminal from the `Server` directory to start the server.
+8. Navigate to the `/client` directory from the root folder
+9. Modify the `vue.config.js` file accordingly
+10. run `npm run serve` in the terminal from the `client` directory to start the client / UI.
+
 Difficulty: Level 1
 
 Overview:
@@ -23,6 +42,9 @@ Prerequisite:
 1. Have git, npm installed and running in local machine.
 2. Have postgresql installed in local machine
 3. Use node version v16.13.1
+
+Optional:
+1. Have Docker and Docker-compose installed on your machine.
 
 Goals:
 1. Get a list of property list from external API
